@@ -66,6 +66,7 @@ export default function Auth() {
                 })
                 .catch(error => {
                     console.error(error);
+                    setIsLoadingSubmit(false);
 
                     if (error.status === 500) {
                         enqueueSnackbar({
@@ -85,7 +86,9 @@ export default function Auth() {
                     });
                 })
                 .finally(() => {
-                    setIsLoadingSubmit(false);
+                    setTimeout(() => {
+                        setIsLoadingSubmit(false);
+                    }, 700);
                 });
         }
     }
@@ -104,11 +107,18 @@ export default function Auth() {
                 <LoginIcon />
             </h2>
             <form className='flex flex-col gap-2'>
-                <TextField required name="email" type='email' id="email" label="E-mail" variant="outlined" onChange={(e) => handleAuthFormChange(e)} value={authForm.email} />
+                <TextField 
+                    disabled={isLoadingSubmit}
+                    required name="email" type='email' 
+                    id="email" label="E-mail" variant="outlined" 
+                    onChange={(e) => handleAuthFormChange(e)} value={authForm.email} 
+                />
 
                 <FormControl sx={{ width: '100%' }} variant="outlined">
                     <InputLabel htmlFor="outlined-adornment-password">Senha *</InputLabel>
                     <OutlinedInput
+                        
+                        disabled={isLoadingSubmit}
                         name="password"
                         type={isShowingPassword ? 'text' : 'password'}
                         id="password"
