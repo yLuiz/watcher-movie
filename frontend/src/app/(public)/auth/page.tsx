@@ -6,7 +6,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import { Button, CircularProgress, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import Link from 'next/link';
 import { useRouter } from "next/navigation";
-import { SnackbarProvider, useSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
 import { useEffect, useState } from "react";
 
 

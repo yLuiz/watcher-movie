@@ -1,14 +1,15 @@
 'use client';
 
 import api from "@/api";
-import { LockClockSharp, Visibility, VisibilityOff } from "@mui/icons-material";
-import { Button, CircularProgress, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from "@mui/material";
+import { Button, CircularProgress, TextField, Tooltip } from "@mui/material";
 import { DatePicker, DateValidationError, LocalizationProvider, PickerChangeHandlerContext } from "@mui/x-date-pickers";
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { useRouter } from "next/navigation";
 import { useSnackbar } from "notistack";
 import { useState } from "react";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 
 interface IMovieRegister {
     title: string;
@@ -88,7 +89,7 @@ export default function CreateMovie() {
                         });
                     })
 
-                    
+
                 })
                 .finally(() => {
                     setIsLoadingSubmit(false);
@@ -97,42 +98,47 @@ export default function CreateMovie() {
     }
 
     function onDataPickerChange(value: string | null, context: PickerChangeHandlerContext<DateValidationError>) {
-        setRegisterForm({...registerForm, year: new Date(value || '')});
+        setRegisterForm({ ...registerForm, year: new Date(value || '') });
     }
 
     return (
         <section className="w-full h-[70vh] flex items-center justify-center">
             <div className="max-w-[500px] w-full p-6 bg-slate-50 rounded m-2">
-            <h2 className='flex items-center justify-center'>
-                Cadastro de Filme.
-            </h2>
-            <form className='flex flex-col gap-2'>
-                <TextField disabled={isLoadingSubmit} required name="title" type='text' id="title" label="Titulo" variant="outlined" onChange={(e) => handleRegisterFormChange(e)} value={registerForm.title} />
+                <Button onClick={() => push('/auth')} className="absolute left-0 top-4">
+                    <Tooltip title="Voltar">
+                        <ArrowBackIcon />
+                    </Tooltip>
+                </Button>
+                <h2 className='flex items-center justify-center'>
+                    Cadastro de Filme.
+                </h2>
+                <form className='flex flex-col gap-2'>
+                    <TextField disabled={isLoadingSubmit} required name="title" type='text' id="title" label="Titulo" variant="outlined" onChange={(e) => handleRegisterFormChange(e)} value={registerForm.title} />
 
-                <TextField disabled={isLoadingSubmit} required name="description" type='text' id="description" label="Descrição" variant="outlined" onChange={(e) => handleRegisterFormChange(e)} value={registerForm.description} />
+                    <TextField disabled={isLoadingSubmit} required name="description" type='text' id="description" label="Descrição" variant="outlined" onChange={(e) => handleRegisterFormChange(e)} value={registerForm.description} />
 
-                <TextField disabled={isLoadingSubmit} required name="duration" type='number' id="duration" label="Duração" variant="outlined" onChange={(e) => handleRegisterFormChange(e)} value={registerForm.duration} />
+                    <TextField disabled={isLoadingSubmit} required name="duration" type='number' id="duration" label="Duração" variant="outlined" onChange={(e) => handleRegisterFormChange(e)} value={registerForm.duration} />
 
-                <TextField disabled={isLoadingSubmit} required name="rating" type='number' id="rating" label="Classificação indicativa" variant="outlined" onChange={(e) => handleRegisterFormChange(e)} value={registerForm.rating} />
-                
-                <LocalizationProvider dateAdapter={AdapterDayjs}>
-                    <DemoContainer components={['DatePicker']}>
-                        <DatePicker disabled={isLoadingSubmit} onChange={onDataPickerChange} label="Data de nascimento" className="w-full" />
-                    </DemoContainer>
-                </LocalizationProvider>
+                    <TextField disabled={isLoadingSubmit} required name="rating" type='number' id="rating" label="Classificação indicativa" variant="outlined" onChange={(e) => handleRegisterFormChange(e)} value={registerForm.rating} />
 
-                <div>
-                    <Button disabled={isLoadingSubmit || Object.values(registerForm).includes('')} onClick={handleSubmit} className='w-full h-[45px]' variant="contained" color='primary'>
-                        {isLoadingSubmit
-                            ? <>
-                                <CircularProgress size={20} />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DemoContainer components={['DatePicker']}>
+                            <DatePicker disabled={isLoadingSubmit} onChange={onDataPickerChange} label="Data de nascimento" className="w-full" />
+                        </DemoContainer>
+                    </LocalizationProvider>
 
-                            </>
-                            : 'Cadastrar'
-                        }
-                    </Button>
-                </div>
-            </form>
+                    <div>
+                        <Button disabled={isLoadingSubmit || Object.values(registerForm).includes('')} onClick={handleSubmit} className='w-full h-[45px]' variant="contained" color='primary'>
+                            {isLoadingSubmit
+                                ? <>
+                                    <CircularProgress size={20} />
+
+                                </>
+                                : 'Cadastrar'
+                            }
+                        </Button>
+                    </div>
+                </form>
             </div>
         </section>
     );
