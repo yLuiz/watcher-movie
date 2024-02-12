@@ -130,7 +130,7 @@ export default function CreateUser() {
                 </FormControl>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DemoContainer components={['DatePicker']}>
-                        <DatePicker disabled={isLoadingSubmit} onChange={onDataPickerChange} label="Data de nascimento" className="w-full" />
+                        <DatePicker format="DD/MM/YYYY" disabled={isLoadingSubmit} onChange={onDataPickerChange} label="Data de nascimento" className="w-full" />
                     </DemoContainer>
                 </LocalizationProvider>
 
