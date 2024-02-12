@@ -67,6 +67,17 @@ export default function CreateUser() {
                 .catch(error => {
                     console.error(error);
 
+                    if (error.status === 500) {
+                        enqueueSnackbar({
+                            anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                            message: 'Houve um erro no servidor',
+                            variant: 'error',
+                            transitionDuration: 2000,
+                            preventDuplicate: true
+                        });
+                    }
+
+
                     const errors: string[] = error.response?.data?.message ?? [];
 
                     errors.forEach(messageError => {

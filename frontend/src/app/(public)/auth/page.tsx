@@ -66,6 +66,17 @@ export default function Auth() {
                 })
                 .catch(error => {
                     console.error(error);
+
+                    if (error.status === 500) {
+                        enqueueSnackbar({
+                            anchorOrigin: { vertical: 'top', horizontal: 'center' },
+                            message: 'Houve um erro no servidor',
+                            variant: 'error',
+                            transitionDuration: 2000,
+                            preventDuplicate: true
+                        });
+                    }
+
                     enqueueSnackbar({
                         anchorOrigin: { vertical: 'top', horizontal: 'center' },
                         message: 'Credenciais incorretas',
