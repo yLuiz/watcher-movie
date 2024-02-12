@@ -1,3 +1,3 @@
-const BASE_URL = 'http://localhost:3005';
+const BASE_URL = 'https://watcher-movie-production.up.railway.app';
 
 export default BASE_URL;
