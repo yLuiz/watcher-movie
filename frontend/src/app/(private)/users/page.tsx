@@ -2,7 +2,7 @@
 
 import api from "@/api";
 import { IUser } from "@/interfaces/IUser";
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from "@mui/material";
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow } from "@mui/material";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
@@ -94,7 +94,7 @@ export default function Users() {
     }
 
     useEffect(() => {
-        getUsers();
+        getUsers({ skip: page, take: rowsPerPage });
     }, []);
 
     return (
@@ -112,60 +112,66 @@ export default function Users() {
                 </div>
             </header>
             <div className="flex items-center justify-center h-full overflow-auto mx-8">
-                <div className="flex-grow max-w-[1700px] w-100% px-8">
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 500 }} aria-label="Tabela de usuários">
-                            <TableHead>
-                                <TableRow>
-                                    {columns.map((column) => (
-                                        <TableCell
-                                            key={column.id}
-                                            align={column.align}
-                                            style={{ minWidth: column.minWidth }}
-                                        >
-                                            {column.label}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {(usersList).map((row) => (
-                                    <TableRow key={row.id}>
-                                        <TableCell component="th" scope="row">
-                                            {row.name}
-                                        </TableCell>
-                                        <TableCell style={{ width: 160 }} align="right">
-                                            {row.email}
-                                        </TableCell>
-                                        <TableCell style={{ width: 160 }} align="right">
-                                            {new Date(row.birthdate).toLocaleDateString()}
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                {emptyRows > 0 && (
-                                    <TableRow style={{ height: 53 * emptyRows }}>
-                                        <TableCell colSpan={6} />
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                            <TableFooter>
-                                <TableRow>
-                                    <TablePagination
-                                        rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                                        count={total}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        labelRowsPerPage='Linhas por página'
-                                        lang='pt-br'
-                                        aria-label="Linhas por página"
-                                        onPageChange={handleChangePage}
-                                        onRowsPerPageChange={handleChangeRowsPerPage}
-                                        ActionsComponent={TablePaginationActions}
-                                    />
-                                </TableRow>
-                            </TableFooter>
-                        </Table>
-                    </TableContainer>
+                <div className="flex items-start w-100% px-8">
+                    <div className="App">
+                        <Box sx={{ overflow: "auto" }}>
+                            <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
+                                <TableContainer className="w-full" component={Paper}>
+                                    <Table sx={{ minWidth: 500 }} aria-label="Tabela de usuários">
+                                        <TableHead>
+                                            <TableRow>
+                                                {columns.map((column) => (
+                                                    <TableCell
+                                                        key={column.id}
+                                                        align={column.align}
+                                                        style={{ minWidth: column.minWidth }}
+                                                    >
+                                                        {column.label}
+                                                    </TableCell>
+                                                ))}
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {(usersList).map((row) => (
+                                                <TableRow key={row.id}>
+                                                    <TableCell component="th" scope="row">
+                                                        {row.name}
+                                                    </TableCell>
+                                                    <TableCell style={{ width: 160 }} align="right">
+                                                        {row.email}
+                                                    </TableCell>
+                                                    <TableCell style={{ width: 160 }} align="right">
+                                                        {new Date(row.birthdate).toLocaleDateString()}
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                            {emptyRows > 0 && (
+                                                <TableRow style={{ height: 53 * emptyRows }}>
+                                                    <TableCell colSpan={6} />
+                                                </TableRow>
+                                            )}
+                                        </TableBody>
+                                        <TableFooter>
+                                            <TableRow>
+                                                <TablePagination
+                                                    rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
+                                                    count={total}
+                                                    rowsPerPage={rowsPerPage}
+                                                    page={page}
+                                                    labelRowsPerPage='Linhas por página'
+                                                    lang='pt-br'
+                                                    aria-label="Linhas por página"
+                                                    onPageChange={handleChangePage}
+                                                    onRowsPerPageChange={handleChangeRowsPerPage}
+                                                    ActionsComponent={TablePaginationActions}
+                                                />
+                                            </TableRow>
+                                        </TableFooter>
+                                    </Table>
+                                </TableContainer>
+                            </Box>
+                        </Box>
+                    </div>
 
                 </div>
             </div>

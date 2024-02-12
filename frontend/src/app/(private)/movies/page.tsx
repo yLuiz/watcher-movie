@@ -2,7 +2,7 @@
 
 import api from "@/api";
 import { IMovie } from "@/interfaces/IMovie";
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, Tooltip } from "@mui/material";
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, Tooltip } from "@mui/material";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -107,14 +107,14 @@ export default function Movies() {
         api.delete<void>(`/movie/${id}`, {
             headers: {
                 Authorization: 'Bearer ' + localStorage.getItem('token')
-            }   
+            }
         })
-        .then(() => {
-            getMovies();
-        })
-        .catch(error => {
-            console.error(error);
-        })
+            .then(() => {
+                getMovies();
+            })
+            .catch(error => {
+                console.error(error);
+            })
     }
 
     useEffect(() => {
@@ -135,74 +135,79 @@ export default function Movies() {
             </header>
 
             <div className="flex items-center justify-center h-full overflow-auto mx-8">
-                <div className="flex-grow max-w-[1700px] w-100% px-8">
-                    <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
-                            <TableHead>
-                                <TableRow>
-                                    {columns.map((column) => (
-                                        <TableCell
-                                            key={column.id}
-                                            align={column.align}
-                                            style={{ minWidth: column.minWidth }}
-                                        >
-                                            {column.label}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {(movies).map((row) => (
-                                    <TableRow key={row.id}>
-                                        <TableCell align="left" component="th" scope="row">
-                                            {row.title}
-                                        </TableCell>
-                                        <TableCell style={{ width: 160 }} align="right">
-                                            {row.description}
-                                        </TableCell>
-                                        <TableCell style={{ width: 160 }} align="right">
-                                            {row.duration} Minutos
-                                        </TableCell>
-                                        <TableCell style={{ width: 160 }} align="right">
-                                            {new Date(row.year).getFullYear()}
-                                        </TableCell>
-                                        <TableCell style={{ width: 160 }} align="right">
-                                            {row.rating}
-                                        </TableCell>
-                                        <TableCell style={{ width: 160 }} align="right">
-                                            <Button className="h-full" onClick={() => handleDelete(row.id)}>
-                                                <Tooltip title='Remover'>
-                                                    <DeleteIcon color="error" />
-                                                </Tooltip>
-                                            </Button>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                                {emptyRows > 0 && (
-                                    <TableRow style={{ height: 53 * emptyRows }}>
-                                        <TableCell colSpan={6} />
-                                    </TableRow>
-                                )}
-                            </TableBody>
-                            <TableFooter>
-                                <TableRow>
-                                    <TablePagination
-                                        rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
-                                        count={total}
-                                        rowsPerPage={rowsPerPage}
-                                        page={page}
-                                        labelRowsPerPage='Linhas por página'
-                                        lang='pt-br'
-                                        aria-label="Linhas por página"
-                                        onPageChange={handleChangePage}
-                                        onRowsPerPageChange={handleChangeRowsPerPage}
-                                        ActionsComponent={TablePaginationActions}
-                                    />
-                                </TableRow>
-                            </TableFooter>
-                        </Table>
-                    </TableContainer>
-
+                <div className="w-100% px-8">
+                    <div className="App">
+                        <Box sx={{ overflow: "auto" }}>
+                            <Box sx={{ width: "100%", display: "table", tableLayout: "fixed" }}>
+                                <TableContainer component={Paper}>
+                                    <Table sx={{ minWidth: 500 }} aria-label="custom pagination table">
+                                        <TableHead>
+                                            <TableRow>
+                                                {columns.map((column) => (
+                                                    <TableCell
+                                                        key={column.id}
+                                                        align={column.align}
+                                                        style={{ minWidth: column.minWidth }}
+                                                    >
+                                                        {column.label}
+                                                    </TableCell>
+                                                ))}
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {(movies).map((row) => (
+                                                <TableRow key={row.id}>
+                                                    <TableCell align="left" component="th" scope="row">
+                                                        {row.title}
+                                                    </TableCell>
+                                                    <TableCell style={{ width: 160 }} align="right">
+                                                        {row.description}
+                                                    </TableCell>
+                                                    <TableCell style={{ width: 160 }} align="right">
+                                                        {row.duration} Minutos
+                                                    </TableCell>
+                                                    <TableCell style={{ width: 160 }} align="right">
+                                                        {new Date(row.year).getFullYear()}
+                                                    </TableCell>
+                                                    <TableCell style={{ width: 160 }} align="right">
+                                                        {row.rating}
+                                                    </TableCell>
+                                                    <TableCell style={{ width: 160 }} align="right">
+                                                        <Button className="h-full" onClick={() => handleDelete(row.id)}>
+                                                            <Tooltip title='Remover'>
+                                                                <DeleteIcon color="error" />
+                                                            </Tooltip>
+                                                        </Button>
+                                                    </TableCell>
+                                                </TableRow>
+                                            ))}
+                                            {emptyRows > 0 && (
+                                                <TableRow style={{ height: 53 * emptyRows }}>
+                                                    <TableCell colSpan={6} />
+                                                </TableRow>
+                                            )}
+                                        </TableBody>
+                                        <TableFooter>
+                                            <TableRow>
+                                                <TablePagination
+                                                    rowsPerPageOptions={[5, 10, 25, { label: 'Todos', value: -1 }]}
+                                                    count={total}
+                                                    rowsPerPage={rowsPerPage}
+                                                    page={page}
+                                                    labelRowsPerPage='Linhas por página'
+                                                    lang='pt-br'
+                                                    aria-label="Linhas por página"
+                                                    onPageChange={handleChangePage}
+                                                    onRowsPerPageChange={handleChangeRowsPerPage}
+                                                    ActionsComponent={TablePaginationActions}
+                                                />
+                                            </TableRow>
+                                        </TableFooter>
+                                    </Table>
+                                </TableContainer>
+                            </Box>
+                        </Box>
+                    </div>
                 </div>
             </div>
         </section>

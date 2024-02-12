@@ -2,6 +2,9 @@
 
 Sistema de cadastro e listagem de Usuários e filmes.
 
+Aplicação em Deploy: 
+https://watcher-movie.vercel.app/auth
+
 # 🖼 Front-end
 
 ## 💻 Tecnologias
