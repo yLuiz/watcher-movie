@@ -66,7 +66,7 @@ export default function CreateMovie() {
 
                     enqueueSnackbar({
                         anchorOrigin: { vertical: 'top', horizontal: 'center' },
-                        message: 'Usuário criado com sucesso',
+                        message: 'Filme criado com sucesso',
                         variant: 'success',
                         preventDuplicate: true,
                         autoHideDuration: 800
